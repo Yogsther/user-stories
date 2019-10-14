@@ -1,0 +1,21 @@
+USER STORIES
+
+som en <roll> vill jag <aktivitet> i <sammanhang> f�r att <orsak>
+
+System d�r elever kan skriva den h�r typen av user stories. 
+Enkelt, flexiblelt. Man ska kunna skriva vad som helst.
+Ocks� tips om vad som ska skrivas.
+Bra om det finns standards. Insperation.
+Roliga alternativ (som en superhj�lte vill jag r�dda katter f�r att f� kakor)
+(som en programmerare vill jag ha l�sa aktiviter p� mitt arbete f�r att..?)
+"Cake and Beer"
+
+Flera user stories per person.
+
+Snippets, Blocks?
+Drag and drop?
+
+Prereq
+Apache, MYSQL
+
+Frontend bara? Yes.
