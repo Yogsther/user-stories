@@ -13,25 +13,26 @@
 </head>
 
 <body>
-    <div id="wrap">
-        <img src="design/logo_140.png" id="logo" alt="logo">
-        <div class="story">
-            <div class="story-piece">
-                <span class="story-text">Som en</span>
-                <input type="text" class="story-input" placeholder="roll">
-            </div>
-            <div class="story-piece">
-                <span class="story-text">Som en</span>
-                <input type="text" class="story-input" placeholder="roll">
-            </div>
-            <div class="story-piece">
-                <span class="story-text">Som en</span>
-                <input type="text" class="story-input" placeholder="roll">
-            </div>
-        </div>
-        <button>Lägg till story</button>
-        <button>Dela story</button>
+    <span id="ruler" style="font-size:30px;text-align: center;display:block;visibility:hidden;white-space:nowrap;position:absolute;font-family:'Roboto';"></span>
+    <div id="header">
+        <a href="/" id="logo-link">
+            <img src="design/logo_00.png" id="logo" alt="logo">
+        </a>
+        
+
     </div>
+    <div id="wrap">
+        <span id="stories"></span>
+        <div id="story-link-pack">
+            <select name="" id="choose-template"></select>
+            <button id="add-story-button" onclick="add_story()" class="btn">Add story</button>
+            <input type="text" placeholder="Länk till din story" id="story-link" onclick="this.setSelectionRange(0, this.value.length); copy_link()" readonly="readonly">
+            <button id="copy-link-button" class="btn" onclick="copy_link()">Copy link</button>
+        <img src="design/share_0.png" id="share-notation" alt="">
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
 </body>
 
 </html>
