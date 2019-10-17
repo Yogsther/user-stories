@@ -3,8 +3,10 @@ var stories = {};
 var last_link = "";
 
 // Animating images
-animate_logo("logo", "design/logo_small_black_xx.png", 3, 200);
-animate_logo("share-notation", "design/share_x.png", 2, 250);
+animate_image("logo", "design/logo_small_black_xx.png", 3, 200);
+animate_image("share-notation", "design/share_x.png", 2, 250);
+animate_image('github', 'design/github_x.png', 3)
+animate_image('reset', 'design/reset_x.png', 3)
 
 window.onload = () => {
     load_template_options();
@@ -13,21 +15,21 @@ window.onload = () => {
 };
 
 document.fonts.onloadingdone = () => {
-    for(var el of document.getElementsByClassName('story-input')) update_story(el)
+    for (var el of document.getElementsByClassName("story-input"))
+        update_story(el);
 };
 
 window.onpopstate = e => {
     preload_story();
 };
 
-
-String.prototype.pixelLength = function() {
+String.prototype.pixelLength = function () {
     var ruler = document.getElementById("ruler");
     ruler.innerHTML = this;
     return ruler.offsetWidth;
 };
 
-String.prototype.nthIndex = function(pat, n) {
+String.prototype.nthIndex = function (pat, n) {
     n++;
     var L = this.length,
         i = -1;
@@ -45,7 +47,7 @@ String.prototype.nthIndex = function(pat, n) {
  * @param {*} length Amount of images
  * @param {*} speed ms between each frame
  */
-function animate_logo(target, path, length, speed = 200) {
+function animate_image(target, path, length, speed = 200) {
     var target = document.getElementById(target);
     var images = [];
 
@@ -66,25 +68,24 @@ function animate_logo(target, path, length, speed = 200) {
         return value;
     }
 
-    var index = 0;
+    var index = Math.floor(Math.random()*length-1);
     var loop = setInterval(() => {
-        target.src = images[index++ % length].src;
+        try{
+            target.src = images[index++ % length].src;
+        } catch(e){}
     }, speed);
 
     return loop;
 }
 
-
-
-var keys_down = []
-document.addEventListener('keydown', e => {
-    keys_down[e.keyCode] = true
-    if(keys_down[17] && keys_down[90]) history.back()
-})
-document.addEventListener('keyup', e => {
-    keys_down[e.keyCode] = false
-    
-})
+var keys_down = [];
+document.addEventListener("keydown", e => {
+    keys_down[e.keyCode] = true;
+    if (keys_down[17] && keys_down[90]) history.back();
+});
+document.addEventListener("keyup", e => {
+    keys_down[e.keyCode] = false;
+});
 
 function preload_story() {
     loading = true;
@@ -126,11 +127,11 @@ function preload_story() {
 function add_custom_template(string) {
     var key =
         string
-            .substr(0, 10)
-            .split("{")
-            .join("")
-            .split("}")
-            .join("") + "...";
+        .substr(0, 10)
+        .split("{")
+        .join("")
+        .split("}")
+        .join("") + "...";
     templates[key] = {
         key: key,
         text: string,
@@ -147,13 +148,7 @@ function user_add_story(el) {
             "Enter your story template here. For every word you want to be editable surround it with curcly brackes. Exmaple: A word that is {editable}!"
         );
         if (template && template.length >= 10) {
-            var key = template.substr(0, 10);
-            templates[key] = {
-                key: key,
-                text: template,
-                custom: true
-            };
-            load_template_options();
+            add_custom_template(template);
             update_link();
         } else {
             alert("Story is too short.");
@@ -167,8 +162,7 @@ function user_add_story(el) {
 function add_story(template = undefined, inputs = []) {
     var el = document.getElementById("stories");
     if (!template) template = document.getElementById("choose-template").value;
-    var story = generate_story(templates[template], inputs);
-    el.appendChild(story);
+    generate_story(templates[template], inputs);
 }
 
 function update_link() {
@@ -180,9 +174,9 @@ function generate_link() {
     for (var key in templates)
         if (templates[key].custom) custom_templates.push(templates[key].text);
     var c_templates =
-        custom_templates.length > 0
-            ? encodeURIComponent(btoa(JSON.stringify(custom_templates)))
-            : false;
+        custom_templates.length > 0 ?
+        encodeURIComponent(btoa(JSON.stringify(custom_templates))) :
+        false;
     var c_stories = encodeURIComponent(btoa(JSON.stringify(stories)));
     return (
         location.origin +
@@ -244,16 +238,24 @@ function set_width(el) {
     return el;
 }
 
+function delete_story(el){
+    var story_id = el.getAttribute('story-id')
+    delete stories[story_id]
+    document.getElementById(story_id).remove()
+    update_link()
+    push_history()
+}
+
 function generate_story(
     template = templates["Som en roll"],
     inputs = [],
     prevent_push = false
 ) {
-    //<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
     // Setup story element
     var story = document.createElement("div");
     story.classList.add("story");
     var id = `story_${auto_increment++}`;
+    story.id = id
     // Index of editable word in the story
     var input_index = 0;
     // Insert new exert into global stories
@@ -277,14 +279,15 @@ function generate_story(
             // Grab the word in its entirety without brackets from the text
             // If inputs for this word is definied, instead put that in the value
             // ... This is for when loading a story.
-            var value = inputs[input_index]
-                ? inputs[input_index]
-                : template.substr(i + 1, stop - i - 1);
+            var value = inputs[input_index] ?
+                inputs[input_index] :
+                template.substr(i + 1, stop - i - 1);
 
             // Prepare the input field
             input_field.setAttribute("story-id", id);
             input_field.setAttribute("value", value);
             input_field.setAttribute("input-index", input_index);
+            input_field.setAttribute('onclick', "this.setSelectionRange(0, this.value.length);")
             input_field.setAttribute("oninput", "update_story(this, true)");
             input_field.classList.add("story-input");
             input_field.type = "text";
@@ -303,6 +306,16 @@ function generate_story(
             story.innerHTML += letter;
         }
     }
+    var delete_button = new Image();
+    delete_button.src = "design/delete_0.png";
+    delete_button.setAttribute("story-id", id);
+    delete_button.classList.add("delete-button");
+    delete_button.id = 'delete_'+id;
+    delete_button.title = "Delete this story (use CTRL+Z to undo!)"
+    delete_button.setAttribute('onclick', "delete_story(this)")
+    story.appendChild(delete_button);
 
+    document.getElementById('stories').appendChild(story);
+    animate_image("delete_" + id, "design/delete_x.png", 2, 300);
     return story;
 }
