@@ -12,6 +12,10 @@ window.onload = () => {
     if (Object.keys(stories).length == 0) add_story(undefined, undefined, true);
 };
 
+document.fonts.onloadingdone = () => {
+    for(var el of document.getElementsByClassName('story-input')) update_story(el)
+};
+
 window.onpopstate = e => {
     preload_story();
 };
