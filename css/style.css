@@ -21,13 +21,13 @@ img {
 
 #header {
     width: 100%;
-    height: 80px;
-    background: url('/design/header.jpg') rgb(17, 17, 17);
+    height: 75px;
+    background:rgb(211, 211, 211);
     margin-bottom: 20px;
 }
 
 #logo, #logo-link {
-    width: 80px;
+    width: 75px; 
     margin: 0 auto;
     display: block;
     position: relative;
@@ -79,7 +79,7 @@ img {
 
 
 #choose-template {
-    width: calc(100% - 150px);
+    width: calc(100% - 28px);
     padding: 13px;
     border-radius: 5px;
     ;

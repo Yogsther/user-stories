@@ -7,25 +7,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/templates.js"></script>
-    <script src="js/vue.min.js"></script>
+    <!-- <script src="js/vue.min.js"></script> -->
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <title>USER STORIES</title>
+    <title>User Stories!</title>
+    <link rel="shortcut icon" href="design/favicon.png" type="image/x-icon">
 </head>
 
 <body>
     <span id="ruler" style="font-size:30px;text-align: center;display:block;visibility:hidden;white-space:nowrap;position:absolute;font-family:'Roboto';"></span>
     <div id="header">
         <a href="/" id="logo-link">
-            <img src="design/logo_00.png" id="logo" alt="logo">
+            <img src="design/logo_small_black_00.png" id="logo" alt="logo">
         </a>
-        
-
     </div>
     <div id="wrap">
         <span id="stories"></span>
         <div id="story-link-pack">
-            <select name="" id="choose-template"></select>
-            <button id="add-story-button" onclick="add_story()" class="btn">Add story</button>
+            <select name="" oninput="user_add_story(this)" id="choose-template"></select>
+            <!-- <button id="add-story-button" onclick="add_story()" class="btn">Add story</button> -->
             <input type="text" placeholder="Länk till din story" id="story-link" onclick="this.setSelectionRange(0, this.value.length); copy_link()" readonly="readonly">
             <button id="copy-link-button" class="btn" onclick="copy_link()">Copy link</button>
         <img src="design/share_0.png" id="share-notation" alt="">
