@@ -8,6 +8,10 @@ animate_image("share-notation", "design/share_x.png", 2, 250);
 animate_image('github', 'design/github_x.png', 3)
 animate_image('reset', 'design/reset_x.png', 3)
 
+document.getElementById('logo-link').href = get_origin_url()
+document.getElementById('reset-link').href = get_origin_url()
+
+
 window.onload = () => {
     load_template_options();
     preload_story();
@@ -179,7 +183,7 @@ function generate_link() {
         false;
     var c_stories = encodeURIComponent(btoa(JSON.stringify(stories)));
     return (
-        location.origin + location.pathname + 
+        get_origin_url() + 
         "?s=" +
         c_stories +
         (c_templates ? "&t=" + c_templates : "")
@@ -318,4 +322,8 @@ function generate_story(
     document.getElementById('stories').appendChild(story);
     animate_image("delete_" + id, "design/delete_x.png", 2, 300);
     return story;
+}
+
+function get_origin_url(){
+    return location.origin + location.pathname
 }
