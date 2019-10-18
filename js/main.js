@@ -179,7 +179,7 @@ function generate_link() {
         false;
     var c_stories = encodeURIComponent(btoa(JSON.stringify(stories)));
     return (
-        location.origin +
+        location.origin + location.pathname + 
         "?s=" +
         c_stories +
         (c_templates ? "&t=" + c_templates : "")
