@@ -16,6 +16,9 @@ window.onload = () => {
     load_template_options();
     preload_story();
     if (Object.keys(stories).length == 0) add_story(undefined, undefined, true);
+    var first_input = document.getElementsByClassName('story-input')[0]
+    first_input.focus()
+    first_input.setSelectionRange(0, first_input.value.length)
 };
 
 document.fonts.onloadingdone = () => {
@@ -86,6 +89,7 @@ var keys_down = [];
 document.addEventListener("keydown", e => {
     keys_down[e.keyCode] = true;
     if (keys_down[17] && keys_down[90]) history.back();
+    if(e.key == 'Enter') copy_link()
 });
 document.addEventListener("keyup", e => {
     keys_down[e.keyCode] = false;
@@ -190,7 +194,7 @@ function generate_link() {
     );
 }
 
-function update_copy_button(text = "Copy link", color = "rgb(243, 243, 243)") {
+function update_copy_button(text = "Copy link", color = "rgb(255, 255, 255)") {
     var button = document.getElementById("copy-link-button");
     button.style.background = color;
     button.innerText = text;
